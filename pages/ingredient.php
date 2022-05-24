@@ -1,5 +1,4 @@
 <?php 
-  include_once('../conn.php');
   include('../sql/recipe_queries.php'); 
   include('./navbar.php');
 

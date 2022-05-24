@@ -49,7 +49,7 @@ include('./navbar.php');
                         <h1 >Registrering</h1>
                     </div>
                 </div>
-                <form action="./validate.php" name="registration">
+                <form action="./validate.php" method="POST" name="registration">
                     <div class="form-group">
                         <label for="username">Brugernavn</label>
                         <input type="text" name="username"  class="form-control" id="username" aria-describedby="emailHelp" placeholder="Indtast brugernavn">

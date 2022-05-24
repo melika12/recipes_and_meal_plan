@@ -1,6 +1,5 @@
 <?php 
-  include_once('../conn.php');
-  include('../sql/recipe_queries.php'); 
+  include('../api/api_calls.php'); 
   include('./navbar.php');
 
 ?>
@@ -13,7 +12,7 @@
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tilføj måleenhed</button>
   <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
     
-    <?php echo $html ?>
+    <?php echo 'hej' ?>
   </div>
 </div>
 </body>
