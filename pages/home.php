@@ -1,5 +1,5 @@
 <?php 
-  include('../api/api_calls.php'); 
+  include_once('../api/api_calls.php'); 
   include('./navbar.php');
 
 ?>
@@ -9,10 +9,18 @@
     <p class="lead fw-normal">Retter</p>
   </div>
   <!-- Button to open the 'add meal' -->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tilføj ret</button>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRecipe">Tilføj ret</button>
   <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
     
-    <?php echo getRecipe() ?>
+    <?php 
+    $data = getRecipe();
+    if (is_int($data)) {
+      echo $data;
+    } else {
+      foreach ($data as $d) {
+        echo $d['name'].$d['description'].$d['course_of_action'].'</br></br>';
+      } 
+    }?>
   </div>
 </div>
 </body>
