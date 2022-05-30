@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="../css/halfmoon.min.css">
     <link rel="stylesheet" href="../css/fontawesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <title>M&M Retter</title>
+    <title>M&M Ingredienser</title>
 </head>
 <body class="with-custom-webkit-scrollbars with-custom-css-scrollbars" data-dm-shortcut-enabled="true"
       data-set-preferred-mode-onload="true">

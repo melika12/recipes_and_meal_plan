@@ -57,12 +57,46 @@ function getUser() {
   }
 }
 
+function getUserById($id) {
+  $get_data = callAPI('GET', 'http://localhost:5000/api/users/'.$id, false);
+  if (is_int($get_data)) {
+    return $get_data;
+  } else {
+    $data = json_decode($get_data, true);   
+    return $data;
+  }
+}
+
 function getUserByName($name) {
   $get_user = callAPI('GET', 'http://localhost:5000/api/users/name?username='.$name, false);
   if (is_int($get_user)) {
     return $get_user;
   } else {
     $data = json_decode($get_user, true);   
+    return $data;
+  }
+}
+
+function updateUser($id, $username, $password) {
+  $data_array =  array(
+    "id" => $id,
+    "username" => $username,
+    "password" => $password
+  );
+  $put_data = callAPI('PUT', 'http://localhost:5000/api/users/'.$id, json_encode($data_array));
+  if (is_int($put_data)) {
+    return $put_data;
+  } else {
+    return;
+  }
+}
+
+function deleteUser($id) {
+  $delete_user = callAPI('DELETE', 'http://localhost:5000/api/users/'.$id, false);
+  if (is_int($delete_user)) {
+    return $delete_user;
+  } else {
+    $data = json_decode($delete_user, true);
     return $data;
   }
 }

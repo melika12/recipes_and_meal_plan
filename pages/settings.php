@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="../css/halfmoon.min.css">
     <link rel="stylesheet" href="../css/fontawesome.min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <title>Socialert - Settings</title>
+    <title>M&M - Settings</title>
 </head>
 <body class="with-custom-webkit-scrollbars with-custom-css-scrollbars" data-dm-shortcut-enabled="true"
       data-set-preferred-mode-onload="true">
@@ -34,16 +34,13 @@
             <div class="content">
                 <div class="row">
                     <div class="col-lg-12">
-                        <a class="btn btn-primary" role="button" href="bio.php">
-                            <i class="fa fa-address-card"></i> Biography
+                        <a class="btn btn-primary" role="button" href="./user_info.php">
+                            <i class="fa fa-address-card"></i> Bruger Detaljer
                         </a>
-                        <a class="btn btn-primary" role="button" href="privacy_policy.php">
-                            <i class="fas fa-user-lock"></i> Privacy Policy
-                        </a>
-                        <form style="display: inline;" action="/scripts/delete_user.php">
+                        <form style="display: inline;" action="../scripts/delete_user.php">
                             <button class="btn btn-danger" type="submit"
-                                    onclick="return confirm('Are you sure you want to delete this user?')">
-                                <i class="fas fa-user-times"></i> Delete Profile
+                                    onclick="return confirm('Er du sikker på at du vil slette denne bruger?')">
+                                <i class="fas fa-user-times"></i> Slet Bruger
                             </button>
                         </form>
                     </div>
