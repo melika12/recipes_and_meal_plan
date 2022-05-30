@@ -15,8 +15,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="meal" content="<?= $_GET['recipe'] ?>">
 
-    <link rel="stylesheet" href="/css/halfmoon.min.css">
-    <link rel="stylesheet" href="/css/fontawesome.min.css">
+    <link rel="stylesheet" href="../css/halfmoon.min.css">
+    <link rel="stylesheet" href="../css/fontawesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <title>M&M - Mad</title>
 </head>
