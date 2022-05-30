@@ -1,3 +1,5 @@
+$("#second").hide();
+
 function signUp() {
     $("#first").fadeOut("fast", function() {
         $("#second").fadeIn("fast");

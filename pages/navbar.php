@@ -1,34 +1,68 @@
-<!DOCTYPE html>
-<html lang="da">
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <!-- Include the above in your HEAD tag -->
+<?php
+    error_reporting(0);
+?>
+<nav class="navbar">
+    <div class="navbar-content">
+        <form class="form-inline ml-auto" action="../scripts/find_meal.php" method="get">
+            <div class="search-box">
+                <input list="names" type="text" class="form-control w-300" autocomplete="off" name="search"
+                       placeholder="Search for meal">
+                <datalist id="names" class="result"></datalist>
+            </div>
+        </form>
+    </div>
+    <ul class="navbar-nav ml-auto mr-15">
+        <li class="nav-item">
+            <a href="./home.php" class="nav-link">Retter</a>
+        </li>
+        <li class="nav-item">
+            <a href="./ingredient.php" class="nav-link">Ingredienser</a>
+        </li>
+        <li class="nav-item">
+            <a href="./amount.php" class="nav-link">Måleenheder</a>
+        </li>
+        <?php if(!$_SESSION['user']) { ?>
+        <li class="nav-item">
+            <a href="./login.php" class="nav-link">Login</a>
+        </li>
+        <?php } ?>
+        <?php if($_SESSION['user']) { ?>
+        <li class="nav-item dropdown with-arrow">
+            <a class="nav-link" data-toggle="dropdown" id="nav-link-dropdown-toggle">
+                <?= $_SESSION['user']['username'] ?>
+                <i class="fa fa-angle-down ml-5" aria-hidden="true"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="nav-link-dropdown-toggle">
+                <a href="./settings.php" class="dropdown-item">Settings</a>
+                <a href="../scripts/logout.php" class="dropdown-item">Log out</a>
+            </div>
+        </li>
+        <?php } ?>
+    </ul>
+</nav>
+<script>
+    $(document).ready(function () {
+        $('.search-box input[type="text"]').on('keyup input', function () {
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link href="../style/style.css" rel="stylesheet">
-    <script src="../js/script.js"></script>
-    <head>
-        <title>M&Ms madplan</title>
-        <meta charset="UTF-8">
-    </head>
-    <?php 
-        include('recipes.php');
-    ?> 
-    <body>
-        <header class="site-header sticky-top py-1 bg-dark">
-            <nav class="container d-flex flex-column flex-md-row justify-content-between">
-                <a type="button" class="btn btn-primary" href="./home.php">Retter</a>
-                <a type="button" class="btn btn-primary" href="./ingredient.php">Ingredienser</a>
-                <a type="button" class="btn btn-primary" href="./amount.php">Måleenheder</a>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opret madplan</button>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Generere madplan</button>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Indstillinger</button>
-                <a type="button" class="btn btn-primary" href="./login.php">Login</a>
-            </nav>
-        </header>
+            /* Get input value on change */
+            let inputVal = $(this).val();
+            let resultDropdown = $(this).siblings(".result");
+            if (inputVal.length) {
+
+                $.get("../scripts/search_bar.php", {search: inputVal}).done(function (data) {
+                    // Display the returned data in browser
+                    console.log(data);
+                    resultDropdown.html(data);
+                });
+            } else {
+                resultDropdown.empty();
+            }
+        });
+
+        // Set search input value on click of result item
+        $(document).on('click', '.result p', function () {
+            $(this).parents('.search-box').find('input[type="text"]').val($(this).text());
+            $(this).parent('.result').empty();
+        });
+    });
+</script>

@@ -1,80 +1,84 @@
-<?php 
-include('./navbar.php');
+<?php
+    session_start();
+
+    if (isset($_SESSION['user'])) {
+        header('Location: ./home.php');
+        exit();
+    }
 ?>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="/css/halfmoon.min.css">
+    <link rel="stylesheet" href="/css/fontawesome.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="../js/login.js"></script>
-<div class="position-relative overflow-hidden p-3 p-md-1 m-md-1 text-center md-light">
-  <div class="col-md-5 p-lg-5 mx-auto my-5">
-    <h1 class="display-4 fw-normal">M&Ms</h1>
-    <p class="lead fw-normal">Log ind og registrering</p>
-  </div>
-  <div class="container">
-      <div class="row">
-          <div class="col-md-5 mx-auto">
-              <div id="first">
-                  <div class="myform form ">
-                      <div class="logo mb-3">
-                          <div class="col-md-12 text-center">
-                              <h1>Log ind</h1>
-                            </div>
-                        </div>
-                        <form action="" method="post" name="login">
+
+    <title>M&M - Login</title>
+</head>
+<body class="with-custom-webkit-scrollbars with-custom-css-scrollbars" data-dm-shortcut-enabled="true"
+      data-set-preferred-mode-onload="true">
+
+<div class="page-wrapper with-navbar">
+    <?php require_once('./navbar.php'); ?>
+
+    <div class="content-wrapper">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-6">
+                    <div class="card" id="first">
+                        <h3 class="card-title">Login</h3>
+                        <form action="../scripts/login.php" name="login" method="post">
                             <div class="form-group">
-                                <label for="username">Brugernavn</label>
-                                <input type="text" name="username"  class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Indtast brugernavn">
+                                <label for="username" class="required">Username</label>
+                                <input type="text" name="username" id="username" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="password">Kodeord</label>
-                                <input type="password" name="password" id="password"  class="form-control" aria-describedby="passwordHelp" placeholder="Indtast kodeord">
+                                <label for="password" class="required">Password</label>
+                                <input type="password" name="password" id="password" class="form-control">
                             </div>
-                    <div class="form-group">
-                        <p class="text-center">Ved at registrere dig, acceptere du samtidig vores <a href="#">Vilkår For Brug</a></p>
+                            <div class="form-group text-center">
+                                Har du ikke en bruger? <a href="#" onclick="signUp();return false;" id="signup">Registrere dig her</a>
+                            </div>
+                            <div class="form-group text-right">
+                                <button type="submit" class="btn btn-primary">Login</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="col-md-12 text-center ">
-                        <button type="submit" class=" btn btn-block mybtn btn-primary">Log ind</button>
+
+                    <!-- HIDDEN REGISTER FORM -->
+                    <div class="card" id="second" style="display:none">
+                        <h3 class="card-title">Register</h3>
+                        <form action="../scripts/create_user.php" name="registration" method="post">
+                            <div class="form-group">
+                                <label for="username" class="required">Username</label>
+                                <input type="text" name="username" id="username" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="required">Password</label>
+                                <input type="password" name="password" id="password" class="form-control">
+                            </div>
+                            <div class="form-group text-center">
+                                <a href="#" onclick="logIn(); return false;" id="signin">Har du allerede en bruger?</a>
+                            </div>
+                            <div class="form-group text-right">
+                                <button type="submit" class="btn btn-primary">Register</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="col-md-12">
-                        <div class="login-or"></div>
-                    </div>
-                    <div class="form-group">
-                        <p class="text-center">Har du ikke en bruger? <a href="#" onclick="signUp();return false;" id="signup">Registrere dig her</a></p>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div id="second">
-            <div class="myform form ">
-                <div class="logo mb-3">
-                    <div class="col-md-12 text-center">
-                        <h1 >Registrering</h1>
-                    </div>
+                    <!-- HIDDEN REGISTER FORM END -->
                 </div>
-                <form action="./validate.php" method="POST" name="registration">
-                    <div class="form-group">
-                        <label for="username">Brugernavn</label>
-                        <input type="text" name="username"  class="form-control" id="username" aria-describedby="emailHelp" placeholder="Indtast brugernavn">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Kodeord</label>
-                        <input type="password" name="password" id="password"  class="form-control" aria-describedby="passwordHelp" placeholder="Indtast kodeord">
-                    </div>
-                    <div class="form-group">
-                        <label for="repeatedPassword">Gentag kodeord</label>
-                        <input type="password" name="repeatedPassword" id="repeatedPassword"  class="form-control" aria-describedby="passwordHelp" placeholder="Gentag kodeord">
-                    </div>
-                    <div class="col-md-12 text-center mb-3">
-                        <button type="submit" class=" btn btn-block mybtn btn-primary">Registrere mig</button>
-                    </div>
-                    <div class="col-md-12 ">
-                        <div class="form-group">
-                            <p class="text-center"><a href="#" onclick="logIn(); return false;" id="signin">Har du allerede en bruger?</a></p>
-                        </div>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
 </div>
-</div>
+
+<script src="/js/halfmoon.min.js"></script>
 </body>
-</html>   
+</html>
