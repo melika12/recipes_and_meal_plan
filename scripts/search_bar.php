@@ -6,6 +6,8 @@
         $searchq = preg_replace("#[^0-9a-z]#i", "", $searchq);
 
         $searching = getRecipeByName($searchq);
-        echo "<option>" . $searching["name"] . "</option>";
+        foreach ($searching as $s) {
+            echo "<option>" . $s["name"] . "</option>";
+        }
     }
 ?>

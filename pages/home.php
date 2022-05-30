@@ -4,6 +4,10 @@
   include_once('../api/api_calls.php');
 
   $data = getRecipe();
+  if(isset($_SESSION['searchedList'])) {
+        $data = $_SESSION['searchedList'];
+  }
+  unset($_SESSION['searchedList']);
 ?>
 
 <!DOCTYPE html>
@@ -53,6 +57,6 @@
     </div>
 </div>
 
-<script src="/js/halfmoon.min.js"></script>
+<script src="../js/halfmoon.min.js"></script>
 </body>
 </html>

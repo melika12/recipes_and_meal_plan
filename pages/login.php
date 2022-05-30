@@ -79,6 +79,6 @@
     </div>
 </div>
 
-<script src="/js/halfmoon.min.js"></script>
+<script src="../js/halfmoon.min.js"></script>
 </body>
 </html>
