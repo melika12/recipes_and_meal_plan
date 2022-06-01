@@ -39,7 +39,7 @@
                         </a>
                         <form style="display: inline;" action="../scripts/delete_user.php">
                             <button class="btn btn-danger" type="submit"
-                                    onclick="return confirm('Er du sikker pÃ¥ at du vil slette denne bruger?')">
+                                    onclick="return confirm('Er du sikker på at du vil slette denne bruger?')">
                                 <i class="fas fa-user-times"></i> Slet Bruger
                             </button>
                         </form>
@@ -50,6 +50,6 @@
     </div>
 </div>
 
-<script src="/js/halfmoon.min.js"></script>
+<script src="../js/halfmoon.min.js"></script>
 </body>
 </html>

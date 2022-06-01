@@ -1,6 +1,5 @@
 <?php 
   session_start();
-
   include_once('../api/api_calls.php');
 
   $data = getRecipe();
@@ -46,18 +45,18 @@
                   <div class="col-1 mr-20 text-center">
                       <img src="https://www.pngkey.com/png/full/73-730477_first-name-profile-image-placeholder-png.png"
                             class="img-fluid rounded-circle" alt="Image" style="height: 75px; width: 75px;">
-                  </div>
+                  </div>          
                   <div class="col">
                       <?php if ($d['name']) { ?>
                           <h5 class="mt-0"><?= $d['name'] ?></h5>
                       <?php } ?>
                       <p><?= $d['description'] ?></p>
-                  </div>
-              </div>
+                  </div>    
+              </div>    
               <div class="text-right"> <!-- text-right = text-align: right -->
                 <a href="meals.php?recipe=<?= $d['id'] ?>" class="btn">Læs mere</a>
-              </div>
-            </div>
+              </div>  
+            </div>  
             <?php } ?>
         </div>
     </div>
@@ -101,7 +100,14 @@
   </div>
 </div>
 
+<!-- JavaScript -->
 <script src="../js/halfmoon.min.js"></script>
+<script type="text/javascript">
+  // Dark mode
+  window.onload(function() {
+      halfmoon.toggleDarkMode();
+  });
+</script>
 <script>
     var loadFile = function(event) {
         var image = document.getElementById('output');
@@ -127,8 +133,5 @@
         appendButton('m_i', $(this).val());
     });
 </script>
-<!-- <script>
-      document.getElementById("button").addEventListener('click', () => appendButton("something", "/news_events/"));
-   </script> -->
 </body>
 </html>

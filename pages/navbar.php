@@ -1,5 +1,6 @@
 <?php
     error_reporting(0);
+    include_once('mealplan.php');
 ?>
 <nav class="navbar">
     <div class="navbar-content">
@@ -12,6 +13,9 @@
         </form>
     </div>
     <ul class="navbar-nav ml-auto mr-15">
+    <li class="nav-item">
+            <a data-target="#mealplan" data-toggle="modal" href="#mealplan"class="nav-link">Madplan</a>
+        </li>
         <li class="nav-item">
             <a href="./home.php" class="nav-link">Retter</a>
         </li>

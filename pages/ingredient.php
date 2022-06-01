@@ -1,5 +1,8 @@
 <?php
     session_start();
+    include_once('../api/api_calls.php');
+
+    $data = getIngredient();  
 ?>
 
 <!DOCTYPE html>
@@ -18,28 +21,33 @@
 <body class="with-custom-webkit-scrollbars with-custom-css-scrollbars" data-dm-shortcut-enabled="true"
       data-set-preferred-mode-onload="true">
 
-<div class="page-wrapper with-navbar">
+      <div class="page-wrapper with-navbar">
     <?php require_once('./navbar.php'); ?>
     <div class="content-wrapper">
         <div class="container">
             <div class="content">
                 <h2>Ingredienser</h2>
             </div>
-
             <div class="card">
-                    <div class="row mt-20">
-                        <div class="col">
-                            <?php //if ($post['title']) { ?>
-                                <h5 class="mt-0">Ret 1</h5>
-                            <?php //} ?>
-                            <p>Ret 1 info</p>
-                        </div>
-                    </div>
+                <table class="table table-inner-bordered">
+                    <tbody>
+                        <?php foreach ($data as $d) { ?>
+                        <tr>
+                            <td>
+                            <?php if ($d['name']) { ?>
+                                <?= $d['name'] ?>
+                            <?php } ?>
+                            </td>
+                        </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>  
             </div>
-        </div>
-    </div>
-</div>
-
+        </div>    
+    </div>    
+</div>    
+<!-- JavaScript -->
 <script src="../js/halfmoon.min.js"></script>
+</script>
 </body>
 </html>

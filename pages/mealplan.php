@@ -1,63 +1,57 @@
 <?php
   include_once('../api/api_calls.php');
-  // define variables and set to empty values
-
-  //taget fra recipes.php og kan evt genbruge noget herfra
-//   $nameErr = $courseErr = "";
-//   $name = $desc = $course = "";
-
-// if ($_SERVER["REQUEST_METHOD"] == "POST") {
-//   if (empty($_POST["name"])) {
-//     $nameErr = "Navn på retten er påkrævet";
-//   } else {
-//     $name = test_input($_POST["name"]);
-//     // check if name only contains letters and whitespace
-//     if (!preg_match("/^[a-zA-Z-' ]*$/",$name)) {
-//       $nameErr = "Kun bogstaver og mellemrum er tilladt";
-//     }
-//   }
-
-//   if (empty($_POST["course"])) {
-//     $courseErr = "Fremgangsmåde er påkrævet";
-//   } else {
-//     $course = test_input($_POST["course"]);
-//   }
-
-//   if (empty($_POST["desc"])) {
-//     $desc = "";
-//   } else {
-//     $desc = test_input($_POST["desc"]);
-//   }
-// }
-
-function test_input($data) {
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
-}
-
+  $recipes = getRecipe();
+  $days = getweekdays();
 ?>
-  <div class="modal" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-      
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Tilføj ret</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+<!-- First comes the modal -->
+<div class="modal" id="mealplan" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <a href="#" class="btn close" role="button" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </a>
+      <h5 style="font-weight:bold;display:inline-block" class="modal-title">Lav en madplan</h5>
+      <input class="btn btn-primary" type="button" id="randomMealplan" value="Generere madplan" style="float:right">
+      <form action="../scripts/send_mealplan.php" method="POST">
+        <?php foreach ($days as $day) { ?>
+        <div class="form-group" style="display:contents">
+          <label style="font-weight:bold"><?= $day['name'] ?></label>
+          <select name="<?= $day['name'] ?>" id="<?= $day['name'] ?>" required="required" class="form-control" oninvalid="this.setCustomValidity('Vælg en ret for at oprette madplan')" oninput="setCustomValidity('')">
+            <option value="" selected="selected" disabled="disabled">Vælg en ret</option>
+            <?php foreach ($recipes as $recipe) { ?>
+            <option id="<?= $recipe['id'] ?>" value="<?= $recipe['name'] ?>"><?= $recipe['name'] ?></option>
+            <?php } ?>
+          </select>
         </div>
-        
-        <!-- Modal body -->
-        <div class="modal-body">
-            Det her er en madplan og indstillinger
+        <?php } ?>
+        <div class="form-group">
+          <label for="mail" class="required">Email</label>
+          <input type="email" name="mail" class="form-control" placeholder="E-mail" required="required">
         </div>
-        
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
-      </div>
+        <input style="margin-top:1em" class="btn btn-primary btn-block" type="submit" value="Send madplan">
+      </form>
     </div>
   </div>
-  
+</div>
+
+<script src="../js/halfmoon.min.js"></script>
+<script type="text/javascript">
+  //randomizes the recipes on the week days
+  document.getElementById("randomMealplan").addEventListener("click", function() {
+    var weekdays = <?= json_encode($days); ?>;
+    var alreadyChosen = [];
+    //getting each week day and randomizes the recipe
+    weekdays.forEach(day => {
+      var select = document.getElementById(day['name']);
+      var items = select.getElementsByTagName('option');
+      var length = items.length-1;
+      var index = Math.floor(Math.random() * length) + 1;
+      //checks if the recipe has already been chosen and keeps randomizing till it lands on one that has not beenh chosen
+      while (alreadyChosen.includes(index)) {
+        index = Math.floor(Math.random() * length) + 1;
+      }
+      alreadyChosen.push(index);
+      select.selectedIndex = index;
+    });
+  });
+</script>
