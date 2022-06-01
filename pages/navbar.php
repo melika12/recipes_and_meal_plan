@@ -15,6 +15,11 @@
         <li class="nav-item">
             <a href="./home.php" class="nav-link">Retter</a>
         </li>
+        <?php if($_SESSION['user']['isAdmin'] == true) { ?>
+            <li class="nav-item">
+                <a href="./requests.php" class="nav-link">Anmodninger</a>
+            </li>
+        <?php } ?>
         <li class="nav-item">
             <a href="./ingredient.php" class="nav-link">Ingredienser</a>
         </li>

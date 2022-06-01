@@ -8,6 +8,8 @@
         $data = $_SESSION['searchedList'];
   }
   unset($_SESSION['searchedList']);
+
+  $ingredients = getIngredients();
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +35,11 @@
             <div class="content">
                 <h2>Retter</h2>
             </div>
-
+            <div class="content text-right">
+                <?php if($_SESSION['user'] && $_SESSION['user']['isAdmin'] != true) { ?>
+                    <a href="#modal-1" class="btn btn-success" role="button">Anmod om ny opskrift</a>
+                <?php } ?>
+            </div>
             <?php foreach ($data as $d) { ?>
             <div class="card">
               <div class="row mt-20">
@@ -57,6 +63,72 @@
     </div>
 </div>
 
+<!-- First comes the modal -->
+<div class="modal" id="modal-1" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <a href="#" class="btn close" role="button" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </a>
+      <h5 class="modal-title">Anmodning til ny opskrift</h5>
+      <form action="../scripts/request_new_recipe.php" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="file">Billede af retten</label>
+          <input type="file" name="file" id="file" onchange="loadFile(event)" class="form-control custom-file">
+          <img id="output" class="img-fluid rounded" width="100" />
+        </div>
+        <div class="form-group">
+          <label for="meal_name" class="required">Rettens navn</label>
+          <input type="text" id="meal_name" name="meal_name" class="form-control" placeholder="Navn" required="required">
+        </div>
+        <div class="form-group">
+          <label for="meal_ingredients" class="required">Rettens Ingredienser</label>
+          <select class="form-control" id="meal_ingredients" name="meal_ingredients">
+            <option value="" selected="selected" disabled="disabled">Vælg en ingrediens</option>
+            <?php
+                foreach($ingredients as $ingredient) {
+                    echo "<option value='".$ingredient['name']."'>".$ingredient['name']."</option>";
+                }
+            ?>
+          </select>
+          <!-- <input type="text" id="meal_ingredients" class="form-control" placeholder="Ingredienser" required="required"> -->
+        </div>
+        <div class="form-group" id="m_i" name="m_i">
+        </div>
+        <input class="btn btn-primary btn-block" type="submit" name="request_recipe" value="Indsend Anmodning">
+      </form>
+    </div>
+  </div>
+</div>
+
 <script src="../js/halfmoon.min.js"></script>
+<script>
+    var loadFile = function(event) {
+        var image = document.getElementById('output');
+        image.src = URL.createObjectURL(event.target.files[0]);
+    };
+
+
+    function appendButton(elementId, val){
+        // var buttonEl = document.createElement("button");
+        // buttonEl.href = url;
+        var buttonTextEl = document.createElement("span");
+        // buttonTextEl.className = "btn btn-primary";
+        buttonTextEl.classList.add('btn', 'btn-primary', 'disabled');
+        buttonTextEl.innerText = val;
+        buttonTextEl.style.margin = "3px";
+
+        document.getElementById(elementId).appendChild(buttonTextEl);
+   }
+
+
+    $('#meal_ingredients').on('change', function(e) {
+        // $('#m_i').append($(this).val());
+        appendButton('m_i', $(this).val());
+    });
+</script>
+<!-- <script>
+      document.getElementById("button").addEventListener('click', () => appendButton("something", "/news_events/"));
+   </script> -->
 </body>
 </html>

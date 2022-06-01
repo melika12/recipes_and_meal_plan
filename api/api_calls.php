@@ -46,6 +46,22 @@ function insertRecipe($name, $desc, $course) {
   }
 }
 
+function updateRecipe($id, $image, $name, $description, $course_of_action) {
+  $data_array =  array(
+    "id" => $id,
+    "img" => $image,
+    "name" => $name,
+    "description" => $description,
+    "course_of_action" => $course_of_action
+  );
+  $put_data = callAPI('PUT', 'http://localhost:5000/api/recipeItems/'.$id, json_encode($data_array));
+  if (is_int($put_data)) {
+    return $put_data;
+  } else {
+    return;
+  }
+}
+
 /// ---------------------- USERS ---------------------- ///
 function getUser() {
   $get_user = callAPI('GET', 'http://localhost:5000/api/users', false);
@@ -111,5 +127,47 @@ function insertUser($username, $password) {
     return $post_data;
   } else {
     return;
+  }
+}
+
+/// ---------------------- Ingredients ---------------------- ///
+function getIngredients() {
+  $get_data = callAPI('GET', 'http://localhost:5000/api/ingredients', false);
+  if (is_int($get_data)) {
+    return $get_data;
+  } else {
+    $data = json_decode($get_data, true);   
+    return $data;
+  }
+}
+
+/// ---------------------- Recipe Requests ---------------------- ///
+function insertRecipeRequest($userid, $recipe_name, $recipe_img, $recipe_img_type, $recipe_desc, $recipe_coa) {
+  $data_array =  array(
+    "user_id" => $userid,
+    // "ingredient_name" => "",
+    // "unit_name" => "",
+    "recipe_name" => $recipe_name,
+    "recipe_img" => $recipe_img,
+    "recipe_img_extension" => $recipe_img_type,
+    "recipe_description" => $recipe_desc,
+    "recipe_course_of_action" => $recipe_coa,
+    "recipe_count_of_people" => 1
+    );
+  $post_data = callAPI('POST', 'http://localhost:5000/api/requests', json_encode($data_array));
+  if (is_int($post_data)) {
+    return $post_data;
+  } else {
+    return;
+  }
+}
+
+function getRecipeRequests() {
+  $get_data = callAPI('GET', 'http://localhost:5000/api/requests', false);
+  if (is_int($get_data)) {
+    return $get_data;
+  } else {
+    $data = json_decode($get_data, true);   
+    return $data;
   }
 }
