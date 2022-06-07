@@ -28,7 +28,8 @@
           <label for="mail" class="required">Email</label>
           <input type="email" name="mail" class="form-control" placeholder="E-mail" required="required">
         </div>
-        <input style="margin-top:1em" class="btn btn-primary btn-block" type="submit" value="Send madplan">
+        <input style="margin-top:1em" class="btn btn-primary btn-block" name="email" type="submit" value="Send madplan">
+        <input style="margin-top:1em" class="btn btn-primary btn-block" name="calendar" type="submit" value="Tilføj til kalender">
       </form>
     </div>
   </div>

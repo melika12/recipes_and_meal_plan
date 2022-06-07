@@ -3,7 +3,7 @@ include_once('../conn.php');
 
 /// ---------------------- RECIPES ---------------------- ///
 function getRecipe() {
-  $get_data = callAPI('GET', 'http://localhost:5000/api/recipeitems', false);
+  $get_data = callAPI('GET', 'http://localhost:5000/api/recipes', false);
   if (is_int($get_data)) {
     return $get_data;
   } else {
@@ -13,7 +13,7 @@ function getRecipe() {
 }
 
 function getRecipeId($id) {
-  $get_data = callAPI('GET', 'http://localhost:5000/api/recipeitems/'.$id, false);
+  $get_data = callAPI('GET', 'http://localhost:5000/api/recipes/'.$id, false);
   if (is_int($get_data)) {
     return $get_data;
   } else {
@@ -23,7 +23,7 @@ function getRecipeId($id) {
 }
 
 function getRecipeByName($name) {
-  $get_meal = callAPI('GET', 'http://localhost:5000/api/recipeItems/meal?name='.$name, false);
+  $get_meal = callAPI('GET', 'http://localhost:5000/api/recipes/meal?name='.$name, false);
   if (is_int($get_meal)) {
     return $get_meal;
   } else {
@@ -38,7 +38,7 @@ function insertRecipe($name, $desc, $course) {
     "description"      => $desc,
     "course_of_action" => $course,
     );
-  $post_data = callAPI('POST', 'http://localhost:5000/api/recipeitems', json_encode($data_array));
+  $post_data = callAPI('POST', 'http://localhost:5000/api/recipes', json_encode($data_array));
   if (is_int($post_data)) {
     return $post_data;
   } else {
@@ -54,11 +54,22 @@ function updateRecipe($id, $image, $name, $description, $course_of_action) {
     "description" => $description,
     "course_of_action" => $course_of_action
   );
-  $put_data = callAPI('PUT', 'http://localhost:5000/api/recipeItems/'.$id, json_encode($data_array));
+  $put_data = callAPI('PUT', 'http://localhost:5000/api/recipes/'.$id, json_encode($data_array));
   if (is_int($put_data)) {
     return $put_data;
   } else {
     return;
+  }
+}
+
+/// ---------------------- RECIPE INGREDIENTS ---------------------- ///
+function getRecipeIngredients($id) {
+  $get_ingredients = callAPI('GET', 'http://localhost:5000/api/recipeingredients/recipe?recipeid='.$id, false);
+  if (is_int($get_ingredients)) {
+    return $get_ingredients;
+  } else {
+    $data = json_decode($get_ingredients, true);   
+    return $data;
   }
 }
 
@@ -155,20 +166,17 @@ function getweekdays() {
   }
 }
 
-/// ---------------------- Recipe Requests ---------------------- ///
-function insertRecipeRequest($userid, $recipe_name, $recipe_img, $recipe_img_type, $recipe_desc, $recipe_coa) {
+/// ---------------------- REQUESTS ---------------------- ///
+function insertRecipeRequest($name, $img, $time, $coa, $cop) {
   $data_array =  array(
-    "user_id" => $userid,
-    // "ingredient_name" => "",
-    // "unit_name" => "",
-    "recipe_name" => $recipe_name,
-    "recipe_img" => $recipe_img,
-    "recipe_img_extension" => $recipe_img_type,
-    "recipe_description" => $recipe_desc,
-    "recipe_course_of_action" => $recipe_coa,
-    "recipe_count_of_people" => 1
+    "name" => $name,
+    "img" => $img,
+    "time" => $time,
+    "course_of_action" => $coa,
+    "count_of_people" => $cop,
+    "request" => 1
     );
-  $post_data = callAPI('POST', 'http://localhost:5000/api/requests', json_encode($data_array));
+  $post_data = callAPI('POST', 'http://localhost:5000/api/recipes', json_encode($data_array));
   if (is_int($post_data)) {
     return $post_data;
   } else {
@@ -177,14 +185,35 @@ function insertRecipeRequest($userid, $recipe_name, $recipe_img, $recipe_img_typ
 }
 
 function getRecipeRequests() {
-  $get_data = callAPI('GET', 'http://localhost:5000/api/requests', false);
+  $get_data = callAPI('GET', 'http://localhost:5000/api/recipes/requests', false);
 	if (is_int($get_data)) {
-	    return $get_data;
-	  } else {
-	    $data = json_decode($get_data, true);   
-	    return $data;
-	  }
-	}
+    return $get_data;
+  } else {
+    $data = json_decode($get_data, true);   
+    return $data;
+  }
+}
+
+function getIngredientRequests() {
+  $get_data = callAPI('GET', 'http://localhost:5000/api/ingredients/requests', false);
+  if (is_int($get_data)) {
+    return $get_data;
+  } else {
+    $data = json_decode($get_data, true);   
+    return $data;
+  }
+}
+
+function getUnitRequests() {
+  $get_data = callAPI('GET', 'http://localhost:5000/api/units/requests', false);
+  if (is_int($get_data)) {
+    return $get_data;
+  } else {
+    $data = json_decode($get_data, true);   
+    return $data;
+  }
+}
+    
 
 /// ---------------------- INGREDIENTS ---------------------- ///
 function getIngredients() {
@@ -285,5 +314,15 @@ function insertUnit($name) {
     return $post_data;
   } else {
     return;
+  }
+}
+/// ---------------------- NUMBER OF PEOPLE ---------------------- ///
+function getNumberOfPeople() {
+  $get_data = callAPI('GET', 'http://localhost:5000/api/numberofpeople', false);
+  if (is_int($get_data)) {
+    return $get_data;
+  } else {
+    $data = json_decode($get_data, true);   
+    return $data;
   }
 }

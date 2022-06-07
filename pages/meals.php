@@ -2,8 +2,11 @@
     session_start();
 
     require('../api/api_calls.php');
-
-    $meal = getRecipeId($_GET['recipe']);
+    $id = $_GET['recipe'];
+    $meal = getRecipeId($id);
+    $ingredientAmountUnit = getRecipeIngredients($id);
+    $ingredients = getIngredients();
+    $units = getUnits();
 ?>
 
 <!DOCTYPE html>
@@ -27,15 +30,43 @@
     <?php require_once('./navbar.php'); ?>
     <div class="content-wrapper">
         <div class="container-fluid">
-            <div class="content">
-                <h2><?= $meal['name'] ?></h2>
+            <div class="content row">
+                <div class="col">
+                    <h2><?= $meal['name'] ?></h2>
+                </div>
+                <div class="col">
+                <?php if (is_null($d['img'])) { ?>
+                    <img src="../img/placeholder.png" class="img-fluid rounded-circle" alt="Image">
+                    <?php } else { ?>
+                    <img src="../img/<?= $d['img'] ?>" class="img-fluid rounded-circle" alt="Image">
+                    <?php } ?>
+                </div>
             </div>
-
             <div class="card">
-                <div class="row mt-20">
-                    <div class="col">
-                        <h5 class="mt-0">Fremgangsmetode:</h5>
-                        <p><?= $meal['course_of_action'] ?></p>
+                <div class="row">
+                    <div class="col p-5" style="min-width:200px">
+                        <h5 class="mt-0">Fremgangsmåde:</h5>
+                        <p><?php foreach(explode("\r\n", $meal['course_of_action']) as $txt) { echo $txt.'<br>'; } ?></p>
+                    </div>
+                    <div class="col p-5">
+                        <h5 class="mt-0">Tilberedningstid:</h5>
+                        <p><?= $meal['time'] ?> minutter</p>
+                    </div>
+                    <div class="col p-5">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Ingredienser:</th>
+                                <th>Mængde:</th>
+                                <th>Måleenhed:</th>
+                            </tr>
+                            <?php foreach ($ingredientAmountUnit as $iau) { ?>
+                            <tr>
+                                <td><?= $ingredients[$iau['ingredient_id']-1]['name'] ?></td>
+                                <td><?= $iau['amount'] ?></td>
+                                <td><?= $units[$iau['unit_id']-1]['name'] ?></td>
+                            </tr>
+                            <?php } ?> 
+                        </table>
                     </div>
                 </div>
             </div>

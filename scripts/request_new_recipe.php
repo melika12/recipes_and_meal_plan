@@ -4,27 +4,30 @@ session_start();
 include_once('../api/api_calls.php');
 
 if (isset($_POST['request_recipe'])) {
-    if(!empty($_FILES["file"]["name"])) { 
-        // Get file info 
-        $fileName = basename($_FILES["file"]["name"]);
-        $fileType = pathinfo($fileName, PATHINFO_EXTENSION); 
-         
-        // Allow certain file formats 
-        $allowTypes = array('jpg','png','jpeg','gif'); 
-        if(in_array($fileType, $allowTypes)){ 
-            $image = $_FILES['file']['tmp_name'];
-            $image_type = $_FILES['file']['type'];
-            $imgContent = file_get_contents($image);
-            // Insert image content into database 
-            // var_dump($image_type);exit;
-            $userid = $_SESSION['user']['id'];
-            $meal_name = $_POST['meal_name'];
-            // $meal_ingredients_selected = $_POST['meal_ingredients'];
 
-            // var_dump("USERID: ".$userid." | IMAGE_TYPE: ".$image_type." | MEAL_NAME: ".$meal_name);exit;
-            insertRecipeRequest($userid, $meal_name, $imgContent, $image_type, "hej", "test test test");
+    if(isset($_FILES['image'])){
+       $errors= array();
+       $file_name = $_FILES['image']['name'];
+       $file_tmp =$_FILES['image']['tmp_name'];
+       $file_ext=strtolower(end(explode('.',$_FILES['image']['name'])));
+ 
+       $extensions= array("jpeg","jpg","png");
+ 
+       if(in_array($file_ext,$extensions)=== false){
+          $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+       }
+ 
+       $timestamp = date("dmYHis");
+       $newFilename = $_POST['meal_name']."-".$timestamp.'.'.$file_ext;
+ 
+       if(empty($errors)==true){
+          move_uploaded_file($file_tmp,"../img/".$newFilename);
+        }else{
+            $newFilename = null;
+            print_r($errors);
         }
-    }
+    } 
+    insertRecipeRequest($_POST['meal_name'], $newFilename, $_POST['meal_time'], $_POST['course_text'], $_POST['count']);
 
     header('Location: ../pages/home.php');
     exit();

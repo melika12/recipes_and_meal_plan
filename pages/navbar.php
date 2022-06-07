@@ -2,6 +2,7 @@
     error_reporting(0);
     include_once('mealplan.php');
 ?>
+<link rel="stylesheet" href="../style/style.css">
 <nav class="navbar">
     <div class="navbar-content">
         <form class="form-inline ml-auto" action="../scripts/find_meal.php" method="get">
@@ -12,6 +13,14 @@
             </div>
         </form>
     </div>
+    <a href="#" class="toggle-button" tabindex="-1">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </a>
+    <div class="navbar-links ml-auto">
+        <ul class="navbar-nav mr-15">
+            <li class="nav-item">
     <ul class="navbar-nav ml-auto mr-15">
     <li class="nav-item">
             <a data-target="#mealplan" data-toggle="modal" href="#mealplan"class="nav-link">Madplan</a>
@@ -56,6 +65,13 @@
 </nav>
 <script src="../js/halfmoon.min.js"></script>
 <script>
+    const toggleButton = document.getElementsByClassName('toggle-button')[0];
+    const navbar = document.getElementsByClassName('navbar-links')[0];
+
+    toggleButton.addEventListener('click', () => {
+        navbar.classList.toggle('active');
+    });
+
     $(document).ready(function () {
         $('.search-box input[type="text"]').on('keyup input', function () {
 

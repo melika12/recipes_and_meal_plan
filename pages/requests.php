@@ -3,7 +3,7 @@
 
   include_once('../api/api_calls.php');
 
-  $recipeRequests = getRecipeRequests();
+  $recipeRequests = getRequests();
 ?>
 
 <!DOCTYPE html>
