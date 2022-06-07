@@ -19,8 +19,6 @@
         <span class="bar"></span>
     </a>
     <div class="navbar-links ml-auto">
-        <ul class="navbar-nav mr-15">
-            <li class="nav-item">
     <ul class="navbar-nav ml-auto mr-15">
     <li class="nav-item">
             <a data-target="#mealplan" data-toggle="modal" href="#mealplan"class="nav-link">Madplan</a>
