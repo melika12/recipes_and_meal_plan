@@ -9,3 +9,10 @@ if (isset($_POST['save_user_info'])) {
     header('Location: ../pages/settings.php');
     exit();
 }
+
+if (isset($_POST['save_user_changes'])) {
+    updateUser($_POST['user_id'], $_POST['username'], $_POST['password']);
+
+    header('Location: ../pages/users.php');
+    exit();
+}

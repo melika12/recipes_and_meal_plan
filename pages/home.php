@@ -102,12 +102,6 @@
 
 <!-- JavaScript -->
 <script src="../js/halfmoon.min.js"></script>
-<script type="text/javascript">
-  // Dark mode
-  window.onload(function() {
-      halfmoon.toggleDarkMode();
-  });
-</script>
 <script>
     var loadFile = function(event) {
         var image = document.getElementById('output');

@@ -130,6 +130,20 @@ function insertUser($username, $password) {
   }
 }
 
+function insertAdminUser($username, $password) {
+  $data_array =  array(
+    "username" => $username,
+    "password" => $password,
+    "isAdmin" => true
+  );
+  $post_data = callAPI('POST', 'http://localhost:5000/api/users', json_encode($data_array));
+  if (is_int($post_data)) {
+    return $post_data;
+  } else {
+    return;
+  }
+}
+
 /// ---------------------- WEEKDAYS ---------------------- ///
 function getweekdays() {
   $get_data = callAPI('GET', 'http://localhost:5000/api/weekdays', false);
@@ -193,13 +207,80 @@ function getIngredientId($id) {
   }
 }
 
-function insertIngredient($name, $desc, $course) {
+function insertIngredient($name) {
   $data_array =  array(
-    "name"             => $name,
-    "description"      => $desc,
-    "course_of_action" => $course,
-    );
+    "name" => $name
+  );
   $post_data = callAPI('POST', 'http://localhost:5000/api/ingredients', json_encode($data_array));
+  if (is_int($post_data)) {
+    return $post_data;
+  } else {
+    return;
+  }
+}
+
+function insertIngredientRequest($userid, $ingredient_name) {
+  $data_array =  array(
+    "user_id" => $userid,
+    "ingredient_name" => $ingredient_name
+    );
+  $post_data = callAPI('POST', 'http://localhost:5000/api/requests', json_encode($data_array));
+  if (is_int($post_data)) {
+    return $post_data;
+  } else {
+    return;
+  }
+}
+
+function deleteIngredient($id) {
+  $delete_ingredient = callAPI('DELETE', 'http://localhost:5000/api/ingredients/'.$id, false);
+  if (is_int($delete_ingredient)) {
+    return $delete_ingredient;
+  } else {
+    $data = json_decode($delete_ingredient, true);
+    return $data;
+  }
+}
+
+/// ---------------------- UNITS ---------------------- ///
+function getUnits() {
+  $get_data = callAPI('GET', 'http://localhost:5000/api/units', false);
+  if (is_int($get_data)) {
+    return $get_data;
+  } else {
+    $data = json_decode($get_data, true);   
+    return $data;
+  }
+}
+
+function deleteUnit($id) {
+  $delete_unit = callAPI('DELETE', 'http://localhost:5000/api/units/'.$id, false);
+  if (is_int($delete_unit)) {
+    return $delete_unit;
+  } else {
+    $data = json_decode($delete_unit, true);
+    return $data;
+  }
+}
+
+function insertUnitRequest($userid, $unit) {
+  $data_array =  array(
+    "user_id" => $userid,
+    "unit_name" => $unit
+    );
+  $post_data = callAPI('POST', 'http://localhost:5000/api/requests', json_encode($data_array));
+  if (is_int($post_data)) {
+    return $post_data;
+  } else {
+    return;
+  }
+}
+
+function insertUnit($name) {
+  $data_array =  array(
+    "name" => $name
+  );
+  $post_data = callAPI('POST', 'http://localhost:5000/api/units', json_encode($data_array));
   if (is_int($post_data)) {
     return $post_data;
   } else {

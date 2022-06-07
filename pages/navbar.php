@@ -21,6 +21,11 @@
         </li>
         <?php if($_SESSION['user']['isAdmin'] == true) { ?>
             <li class="nav-item">
+                <a href="./users.php" class="nav-link">Brugere</a>
+            </li>
+        <?php } ?>
+        <?php if($_SESSION['user']['isAdmin'] == true) { ?>
+            <li class="nav-item">
                 <a href="./requests.php" class="nav-link">Anmodninger</a>
             </li>
         <?php } ?>
@@ -28,7 +33,7 @@
             <a href="./ingredient.php" class="nav-link">Ingredienser</a>
         </li>
         <li class="nav-item">
-            <a href="./amount.php" class="nav-link">Måleenheder</a>
+            <a href="./units.php" class="nav-link">Måleenheder</a>
         </li>
         <?php if(!$_SESSION['user']) { ?>
         <li class="nav-item">
@@ -49,6 +54,7 @@
         <?php } ?>
     </ul>
 </nav>
+<script src="../js/halfmoon.min.js"></script>
 <script>
     $(document).ready(function () {
         $('.search-box input[type="text"]').on('keyup input', function () {
