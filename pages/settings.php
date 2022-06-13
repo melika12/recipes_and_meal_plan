@@ -9,11 +9,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    <link rel="stylesheet" href="../css/halfmoon.min.css">
-    <link rel="stylesheet" href="../css/fontawesome.min.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <title>M&M - Settings</title>
+    <title>M&M - Indstillinger</title>
 </head>
 <body class="with-custom-webkit-scrollbars with-custom-css-scrollbars" data-dm-shortcut-enabled="true"
       data-set-preferred-mode-onload="true">
@@ -26,7 +22,7 @@
                 <h2>
                     <div class="row">
                         <div class="col">
-                            Settings
+                            Indstillinger
                         </div>
                     </div>
                 </h2>
@@ -37,9 +33,9 @@
                         <a class="btn btn-primary" role="button" href="./user_info.php">
                             <i class="fa fa-address-card"></i> Bruger Detaljer
                         </a>
-                        <form style="display: inline;" action="../scripts/delete_user.php">
-                            <button class="btn btn-danger" type="submit"
-                                    onclick="return confirm('Er du sikker på at du vil slette denne bruger?')">
+                        <form style="display: inline;" action="../scripts/delete.php" method="post">
+                            <button class="btn btn-danger" type="submit" name="delete_user"
+                                    onclick="return confirm('Er du sikker pÃ¥ at du vil slette denne bruger?')">
                                 <i class="fas fa-user-times"></i> Slet Bruger
                             </button>
                         </form>
@@ -49,7 +45,5 @@
         </div>
     </div>
 </div>
-
-<script src="../js/halfmoon.min.js"></script>
 </body>
 </html>
