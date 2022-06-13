@@ -1,8 +1,9 @@
 <?php 
   session_start();
   include_once('../api/api_calls.php');
+  include('generated_mealplan.php');
 
-  $data = getRecipe();
+  $data = getRecipes();
   if(isset($_SESSION['searchedList'])) {
         $data = $_SESSION['searchedList'];
   }
@@ -20,10 +21,11 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="../css/halfmoon.min.css">
-  <link rel="stylesheet" href="../css/fontawesome.min.css">
 <!-- CSS style for numbered input field to hide arrows -->
 <style>
+  body {
+  overflow: hidden; /* Hide scrollbars */
+}
   #content {
     width: 30%;
   }
@@ -39,149 +41,7 @@ input[type=number] {
 }
 </style>
 
-<!-- JavaScript -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script src="../js/halfmoon.min.js"></script>
-<script type="text/javascript">  
-  function next_modal() {
-    //resets the error message p tag
-    document.getElementById("error_msg").innerHTML = "";
-    let allAreFilled = true;
-    let msg = "";
-    
-    //checks if all the required fields has been filled
-    if (document.getElementById("meal_name").value == "") {
-      allAreFilled = false;
-      msg = "Angiv et navn til retten.\n";
-    }
-    if (document.getElementById("meal_time").value == "" || document.getElementById("meal_time").innerHTML > 0) {
-      allAreFilled = false;
-      msg += "Angiv en tid til retten.\n";
-    }
-    if (document.getElementById("count").value == "") {
-      allAreFilled = false;
-      msg += "Angiv antal personer til retten.";
-    }
-  
-    if (!allAreFilled) {
-      document.getElementById("error_msg").innerHTML = msg;
-    } 
-    else { 
-      document.getElementById("ingredient-info").style.display = 'unset';
-      document.getElementById("start-info").style.display = 'none';
-    }
-  }
-
-function last_modal() {
-    //resets the error message
-    document.getElementById("error_ingredient").innerHTML = "";
-    let allAreFilled = true;
-    let msg = "";
-    
-    //checks if all the required fields has been filled
-    if (document.getElementById("ingredient_table").rows.length < 1) {
-      allAreFilled = false;
-      msg = "Angiv minimum 1 ingrediens til retten.\n";
-    }
-  
-    if (!allAreFilled) {
-      document.getElementById("error_ingredient").innerHTML = msg;
-    } 
-    else { 
-      document.getElementById("course-info").style.display = 'unset';
-      document.getElementById("ingredient-info").style.display = 'none';
-    }
-}
-
-
-  //adds ingredient to the ingredient table
-  function add_ingredient() {
-    //resets the error message 
-    document.getElementById("error_ingredient").innerHTML = "";
-    let allAreFilled = true;
-    let msg = "";
-
-    //checks if all the required fields has been filled
-    if (document.getElementById("meal_ingredients").value == "") {
-      allAreFilled = false;
-      msg = "Angiv en ingrediens før du tilføjer.\n";
-    }
-    if (document.getElementById("amount").value == "" || document.getElementById("amount").innerHTML > 0) {
-      allAreFilled = false;
-      msg += "Angiv mængden af ingrediensen.\n";
-    }
-    if (document.getElementById("unit").value == "") {
-      allAreFilled = false;
-      msg += "Angiv måleenheden til ingrediensen.";
-    }
-
-    if (!allAreFilled) {
-      document.getElementById("error_ingredient").innerHTML = msg;
-    } 
-    else { 
-      var table = document.getElementById("ingredient_table");
-
-      //adds header to the table with ingredients
-      if (table.rows.length == 0) {
-        var header = table.createTHead();
-        var row = header.insertRow();    
-        var cell1 = row.insertCell();
-        cell1.innerHTML = "Ingrediens";
-        var cell2 = row.insertCell();
-        cell2.innerHTML = "Mængde";
-        var cell3 = row.insertCell();
-        cell3.innerHTML = "Måleenhed";
-        var cell4 = row.insertCell();
-        cell4.innerHTML = "#";
-        
-        //create a tbody for the table
-        table.createTBody();
-      }
-
-      //checks if the ingredient already are added to the table
-      var rowCount = table.rows.length;
-      for(var i= rowCount - 1; i >= 0; i--) {
-        var row = table.rows[i];
-        var text = row.cells[0].innerHTML;
-        if(text.indexOf(document.getElementById("meal_ingredients").value)!=-1){
-          document.getElementById("error_ingredient").innerHTML = "Denne ingrediens er allerede tilføjet";
-          exit();
-        }
-      }
-
-      //adds the ingredient to the table 
-      var row = table.insertRow();
-      var cell1 = row.insertCell();
-      cell1.innerHTML = document.getElementById("meal_ingredients").value;
-      var cell2 = row.insertCell();
-      cell2.innerHTML = document.getElementById("amount").value;
-      var cell3 = row.insertCell();
-      cell3.innerHTML = document.getElementById("unit").value;
-
-      //adds a delete a tag to the row
-      var aTag = document.createElement('a');
-      aTag.setAttribute('onclick', 'delete_ingredient('+(table.rows.length-1)+')');
-      aTag.innerText = "Slet";
-
-      var cell4 = row.insertCell();
-      cell4.appendChild(aTag);
-
-      refresh_ingredient();
-    }
-  }
-
-  //delete ingredient from ingredient table
-  function delete_ingredient(row) {
-    document.getElementById("ingredient_table").deleteRow(row);
-  }
-
-  //refresh the chosen data after it was added to the ingredient table
-  function refresh_ingredient() {
-    document.getElementById("meal_ingredients").value = "";
-    document.getElementById("amount").value = "";
-    document.getElementById("unit").value = "";
-  }
-</script>
+<script src="../js/recipe.js"></script>
   <title>M&M Retter</title>
 </head>
 <body class="with-custom-webkit-scrollbars with-custom-css-scrollbars" data-dm-shortcut-enabled="true"
@@ -195,28 +55,36 @@ function last_modal() {
                 <h2>Retter</h2>
             </div>
             <div class="content text-right">
-                <?php if($_SESSION['user'] && $_SESSION['user']['isAdmin'] != true) { ?>
-                    <a href="#modal-1" class="btn btn-success" role="button">Anmod om ny opskrift</a>
-                <?php } ?>
+              <?php if ($_SESSION['user']) { ?>
+              <a href="#modal-1" class="btn btn-primary" role="button"><?= ($_SESSION['user']['isAdmin']) ? 'Tilføj ny opskrift' : 'Anmodning om ny opskrift' ?></a>
+              <?php } ?>
             </div>
             <?php foreach ($data as $d) { ?>
             <div class="card">
               <div class="row mt-20">
                   <div class="col-3 mr-20 text-center">
-                  <?php if (is_null($d['img'])) { ?>
-                    <img src="../img/placeholder.png" class="img-fluid rounded-circle" alt="Image">
-                    <?php } else { ?>
-                    <img src="../img/<?= $d['img'] ?>" class="img-fluid rounded-circle" alt="Image">
-                    <?php } ?>
+                    <img src="../img/<?= (is_null($d['img'])) ? 'placeholder.png' : $d['img'] ?>" class="img-fluid rounded-circle" height="100" width="100" name="image" alt="Image">
                   </div>          
                   <div class="col">
+                    <div class="text-right"> 
+                      <?php if ($_SESSION['user']['isAdmin']) { ?>
+                        <a href="#recipe-modal<?= $d['id'] ?>" class="btn btn-primary" style="display:inline-block" role="button">Redigér</a>
+                        <form action="../scripts/delete.php" style="display:inline" method="post">
+                          <input type="hidden" name="recipe_id" value="<?= $d['id'] ?>">
+                          <input type="hidden" name="recipe_img" value="<?= $d['img'] ?>">
+                          <button class="btn btn-danger" type="submit" name="delete_recipe" onclick="return confirm('Er du sikker på at du vil slette denne opskrift?')">
+                            <i class="fas fa-user-times"></i> Slet
+                          </button>                            
+                        </form>
+                      <?php } ?>
+                    </div>  
                       <?php if ($d['name']) { ?>
                           <h5 class="mt-0"><?= $d['name'] ?></h5>
                       <?php } ?>
                       <p>Tilberedningstid: <?= $d['time'] ?> minutter</p>
                   </div>    
               </div>    
-              <div class="text-right"> <!-- text-right = text-align: right -->
+              <div class="text-right"> 
                 <a href="meals.php?recipe=<?= $d['id'] ?>" class="btn">Læs mere</a>
               </div>  
             </div>  
@@ -225,15 +93,15 @@ function last_modal() {
     </div>
 </div>
 
-<!-- First comes the modal -->
+<!-- Add recipe modal -->
 <div class="modal" id="modal-1" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div id="content" class="modal-content">
       <a href="#" class="btn close" role="button" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </a>
-      <h5 class="modal-title">Anmodning til ny opskrift</h5>
-      <form action="../scripts/request_new_recipe.php" method="POST" enctype="multipart/form-data">
+      <h5 class="modal-title"><?= ($_SESSION['user']['isAdmin']) ? 'Tilføj ny opskrift' : 'Anmodning til ny opskrift' ?></h5>
+      <form action="../scripts/request_or_add.php" method="POST" enctype="multipart/form-data">
         <div id="start-info">
         <label id="error_msg" style="color:red;font-weight:bold"></label>
         <div class="form-group">
@@ -296,8 +164,9 @@ function last_modal() {
         <a class="btn btn-primary btn-block" id="request_add_ingredient" onclick="add_ingredient();return false">Tilføj</a>
         </div>
         <div class="form-group" id="m_i" name="m_i" style="max-height:15vw; overflow:auto">
-          <table class="table table-inner-bordered" id="ingredient_table">
+          <table class="table table-inner-bordered" id="ingredient_table" name="ingredient_table">
           </table>
+          <input type="hidden" id="counter" name="counter" value="0">
         </div>
         <a class="btn btn-primary btn-block" id="request_last" onclick="last_modal();return false">Næste</a>
       </div>
@@ -306,17 +175,140 @@ function last_modal() {
           <label for="course_text" class="required">Fremgangsmåde</label>
           <textarea id="course_text" name="course_text" class="form-control" placeholder="Fremgangsmåde" style="resize:none" required="required" ></textarea>
         </div>
-
-        <input class="btn btn-primary btn-block" type="submit" name="request_recipe" value="Indsend Anmodning">
+          <input class="btn btn-primary btn-block" type="submit" name="request_recipe" value="<?= ($_SESSION['user']['isAdmin']) ? 'Tilføj opskrift' : 'Indsend Anmodning'?>">
       </div>
       </form>
     </div>
   </div>
 </div>
 
+<!-- Edit recipe modal -->
+<?php 
+  foreach($data as $recipe) { 
+    $recipeIngredients = getRecipeIngredients($recipe['id']);
+  ?>
+<div class="modal" id="recipe-modal<?= $recipe['id'] ?>" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div id="content" class="modal-content">
+      <a href="#" class="btn close" role="button" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </a>
+      <h5 class="modal-title">Tilpasning af opskrift</h5>
+      <form action="../scripts/edit_recipe_data.php" method="POST" enctype="multipart/form-data">
+        <div id="edit-start-info<?= $recipe['id'] ?>">
+        <label id="edit_error_msg<?= $recipe['id'] ?>" style="color:red;font-weight:bold"></label>
+        <div class="form-group">
+          <label for="image<?= $recipe['id'] ?>">Billede af retten</label>
+          <input type="file" name="image<?= $recipe['id'] ?>" id="image<?= $recipe['id'] ?>" onchange="loadEditFile(event,<?= $recipe['id'] ?>)" class="form-control custom-file">
+          <img id="output<?= $recipe['id'] ?>" src="../img/<?= (is_null($recipe['img'])) ? 'placeholder.png' : $recipe['img'] ?>" class="img-fluid" height="100" width="100" alt="Image">
+        </div>
+        <div class="form-group">
+          <label for="edit_meal_name<?= $recipe['id'] ?>" class="required">Rettens navn</label>
+          <input type="text" id="edit_meal_name<?= $recipe['id'] ?>" name="edit_meal_name<?= $recipe['id'] ?>" class="form-control" value="<?= $recipe['name'] ?>" required="required" >
+        </div>
+        <div class="form-group">
+          <label for="edit_meal_time<?= $recipe['id'] ?>" class="required">Tilberedningstid (i minutter)</label>
+          <input type="number" id="edit_meal_time<?= $recipe['id'] ?>" name="edit_meal_time<?= $recipe['id'] ?>" class="form-control" value="<?= $recipe['time'] ?>" required="required" min="1">
+        </div>
+        <div class="form-group">
+        <label for="edit_count<?= $recipe['id'] ?>" class="required">Antal personer</label>
+          <select class="form-control" id="edit_count<?= $recipe['id'] ?>" name="edit_count<?= $recipe['id'] ?>" required="required">
+            <?php
+                foreach($numberOfPeople as $number) {
+                    if($recipe['count_of_people'] == $number['id']) {
+                        echo "<option selected='selected' value='".$number['id']."'>".$number['count_of_people']."</option>";
+                    } else {
+                        echo "<option value='".$number['id']."'>".$number['count_of_people']."</option>";
+                    }
+                }
+            ?>
+          </select>
+        </div>
+        <a class="btn btn-primary btn-block" id="edit_next<?= $recipe['id'] ?>" onclick="edit_next_modal(<?= $recipe['id'] ?>);return false">Næste</a>
+        </div>
+        <div id="edit-ingredient-info<?= $recipe['id'] ?>" style="display:none">
+        <label id="edit_error_ingredient<?= $recipe['id'] ?>" style="color:red;font-weight:bold"></label>
+        <div class="form-group">
+            <div class="row-eq-spacing">
+          <label for="edit_meal_ingredients<?= $recipe['id'] ?>" class="required">Rettens Ingredienser</label>
+          <select class="form-control" id="edit_meal_ingredients<?= $recipe['id'] ?>" name="edit_meal_ingredients<?= $recipe['id'] ?>">
+            <option value="" selected="selected" disabled="disabled">Vælg en ingrediens</option>
+            <?php
+                foreach($ingredients as $ingredient) {
+                    echo "<option value='".$ingredient['name']."'>".$ingredient['name']."</option>";
+                }
+            ?>
+          </select>
+        </div>
+        <div class="row-eq-spacing">
+        <label for="edit_amount<?= $recipe['id'] ?>" class="required">Mængden af ingrediensen</label>
+            <input type="number" id="edit_amount<?= $recipe['id'] ?>" class="form-control" placeholder="Mængden af ingrediensen" min="1">
+        </div>
+        <div class="row-eq-spacing">
+        <label for="edit_unit<?= $recipe['id'] ?>" class="required">Måleenhed</label>
+          <select class="form-control" id="edit_unit<?= $recipe['id'] ?>" name="edit_unit<?= $recipe['id'] ?>">
+            <option value="" selected="selected" disabled="disabled">Vælg måleenheden</option>
+            <?php
+                foreach($units as $unit) {
+                    echo "<option value='".$unit['name']."'>".$unit['name']."</option>";
+                }
+            ?>
+          </select>
+        </div>
+      </div>
+        <div class="form-group">
+        <a class="btn btn-primary btn-block" id="edit_add_ingredient<?= $recipe['id'] ?>" onclick="edit_add_ingredient(<?= $recipe['id'] ?>);return false">Tilføj</a>
+        </div>
+        <div class="form-group" id="edit_m_i<?= $recipe['id'] ?>" name="edit_m_i<?= $recipe['id'] ?>" style="max-height:15vw; overflow:auto">
+          <table class="table table-inner-bordered" id="edit_ingredient_table<?= $recipe['id'] ?>" name="edit_ingredient_table<?= $recipe['id'] ?>">
+          <thead>
+              <tr>
+                <th>Ingrediens</th>
+                <th>Mængde</th>
+                <th>Måleenhed</th>
+                <th>#</th>
+              </tr>
+              </thead>
+              <tbody>
+            <?php 
+            $counter = 1;
+            foreach ($recipeIngredients as $ri) {
+              echo '<tr id="edit_row'.$counter.'"><td>'.$ingredients[$ri['ingredient_id']-1]['name'].'</td>';
+              echo '<td>'.$ri['amount'].'</td>';
+              echo '<td>'.$units[$ri['unit_id']-1]['name'].'</td>';
+              echo '<td><a onclick="edit_delete_ingredient('.$counter.','.$recipe['id'].')">Slet</a></td>';
+              echo '<input type="hidden" id="hidden_edit_row'.$counter.'" name="edit_ingredient'.$counter.'" value="'.$ri['id'].'|'.$ingredients[$ri['ingredient_id']-1]['id'].'|'.$ri['amount'].'|'.$units[$ri['unit_id']-1]['id'].'"></tr>';
+              $counter +=1;
+             }
+             echo '<input type="hidden" id="counter'.$recipe['id'].'" name="counter'.$recipe['id'].'" value="'.$counter.'">';
+             ?>
+            </tbody>
+          </table>
+        </div>
+        <a class="btn btn-primary btn-block" id="edit_last<?= $recipe['id'] ?>" onclick="edit_last_modal(<?= $recipe['id'] ?>);return false">Næste</a>
+      </div>
+      <div id="edit-course-info<?= $recipe['id'] ?>" style="display:none">
+      <div class="form-group">
+          <label for="edit_course_text<?= $recipe['id'] ?>" class="required">Fremgangsmåde</label>
+          <textarea id="edit_course_text<?= $recipe['id'] ?>" name="edit_course_text<?= $recipe['id'] ?>" class="form-control" style="resize:none" required="required" ><?= $recipe['course_of_action'] ?></textarea>
+        </div>
+        <input type="hidden" name="recipe_id" value="<?= $recipe['id'] ?>">
+          <input class="btn btn-primary btn-block" type="submit" name="edit_recipe" value="Opdater opskrift">
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<?php } ?>
+
 <script>
     var loadFile = function(event) {
         var image = document.getElementById('output');
+        image.src = URL.createObjectURL(event.target.files[0]);
+    };
+
+    var loadEditFile = function(event, id) {
+        var image = document.getElementById('output'+id);
         image.src = URL.createObjectURL(event.target.files[0]);
     };
 </script>
