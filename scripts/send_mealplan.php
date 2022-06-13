@@ -3,7 +3,10 @@ include_once('../api/api_calls.php');
 $days = getweekdays();
 
 //Send email
-if (isset($_POST['email'])) {
+if (isset($_POST['email']) || isset($_POST['emailaddress'])) {
+    //the email address
+    $mail = (isset($_POST['mail'])) ? $_POST['mail'] : $_POST['mailaddress_mealplan'];
+
     // The message
     $txt = ' 
     <html> 
@@ -35,7 +38,7 @@ if (isset($_POST['email'])) {
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n"; 
 
     // Send email 
-    if(mail($_POST['mail'], $subject, $txt, $headers)){ 
+    if(mail($mail, $subject, $txt, $headers)){ 
         header('Location: ../pages/home.php');
     }else{ 
         echo "<script>
@@ -46,7 +49,7 @@ if (isset($_POST['email'])) {
 }
 
 //Add to calendar
-if (isset($_POST['calendar'])) {
+if (isset($_POST['calendar']) || isset($_POST['add_calendar'])) {
     include '../modules/ICS.php';
     $txt ="";
     // The message
@@ -58,6 +61,7 @@ if (isset($_POST['calendar'])) {
     header('Content-Disposition: attachment; filename=madplan.ics');
     $start_date = date("d-m-Y", strtotime("+1 day"));
     $end_date = date("d-m-Y", strtotime("+7 day"));
+    //UTC time
     $time = "5:00PM";
     $ics = new ICS(array(
     'location' => "",
