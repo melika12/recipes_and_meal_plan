@@ -2,7 +2,12 @@
     error_reporting(0);
     include_once('mealplan.php');
 ?>
+<head>
+<link rel="stylesheet" href="../css/halfmoon.min.css">
+<link rel="stylesheet" href="../css/fontawesome.min.css">
 <link rel="stylesheet" href="../style/style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+</head>
 <nav class="navbar">
     <div class="navbar-content">
         <form class="form-inline ml-auto" action="../scripts/find_meal.php" method="get">
@@ -30,18 +35,18 @@
             <li class="nav-item">
                 <a href="./users.php" class="nav-link">Brugere</a>
             </li>
-        <?php } ?>
-        <?php if($_SESSION['user']['isAdmin'] == true) { ?>
             <li class="nav-item">
                 <a href="./requests.php" class="nav-link">Anmodninger</a>
             </li>
         <?php } ?>
+        <?php if($_SESSION['user']['isAdmin'] || $_SESSION['user']) { ?>
         <li class="nav-item">
             <a href="./ingredient.php" class="nav-link">Ingredienser</a>
         </li>
         <li class="nav-item">
             <a href="./units.php" class="nav-link">Måleenheder</a>
         </li>
+        <?php } ?>
         <?php if(!$_SESSION['user']) { ?>
         <li class="nav-item">
             <a href="./login.php" class="nav-link">Login</a>
@@ -54,8 +59,8 @@
                 <i class="fa fa-angle-down ml-5" aria-hidden="true"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="nav-link-dropdown-toggle">
-                <a href="./settings.php" class="dropdown-item">Settings</a>
-                <a href="../scripts/logout.php" class="dropdown-item">Log out</a>
+                <a href="./settings.php" class="dropdown-item">Indstillinger</a>
+                <a href="../scripts/logout.php" class="dropdown-item">Log ud</a>
             </div>
         </li>
         <?php } ?>
@@ -71,6 +76,7 @@
     });
 
     $(document).ready(function () {
+        document.body.classList.add("dark-mode");
         $('.search-box input[type="text"]').on('keyup input', function () {
 
             /* Get input value on change */
