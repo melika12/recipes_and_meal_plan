@@ -3,7 +3,7 @@
 
     require('../api/api_calls.php');
     $id = $_GET['recipe'];
-    $meal = getRecipeId($id);
+    $meal = getRecipeById($id);
     $ingredientAmountUnit = getRecipeIngredients($id);
     $ingredients = getIngredients();
     $units = getUnits();
@@ -17,10 +17,6 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="meal" content="<?= $_GET['recipe'] ?>">
-
-    <link rel="stylesheet" href="../css/halfmoon.min.css">
-    <link rel="stylesheet" href="../css/fontawesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <title>M&M - Mad</title>
 </head>
 <body class="with-custom-webkit-scrollbars with-custom-css-scrollbars" data-dm-shortcut-enabled="true"
@@ -35,11 +31,7 @@
                     <h2><?= $meal['name'] ?></h2>
                 </div>
                 <div class="col">
-                <?php if (is_null($d['img'])) { ?>
-                    <img src="../img/placeholder.png" class="img-fluid rounded-circle" alt="Image">
-                    <?php } else { ?>
-                    <img src="../img/<?= $d['img'] ?>" class="img-fluid rounded-circle" alt="Image">
-                    <?php } ?>
+                    <img src="../img/<?= (is_null($meal['img'])) ? 'placeholder.png' : $meal['img'] ?>" class="img-fluid rounded-circle" name="image" alt="Image">
                 </div>
             </div>
             <div class="card">
@@ -73,7 +65,5 @@
         </div>
     </div>
 </div>
-
-<script src="../js/halfmoon.min.js"></script>
 </body>
 </html>

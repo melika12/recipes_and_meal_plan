@@ -13,10 +13,6 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    <link rel="stylesheet" href="../css/halfmoon.min.css">
-    <link rel="stylesheet" href="../css/fontawesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <title>M&M Ingredienser</title>
 </head>
 <body class="with-custom-webkit-scrollbars with-custom-css-scrollbars" data-dm-shortcut-enabled="true"
@@ -29,15 +25,10 @@
             <div class="content">
                 <h2>Ingredienser</h2>
             </div>
-            <?php if($_SESSION['user'] && $_SESSION['user']['isAdmin'] == true) { ?>
-                <div class="content text-right">
-                    <a href="#modal-2" class="btn btn-primary" role="button">Tilføj ny ingrediens</a>
-                </div>
-            <?php } ?>
             <div class="content text-right">
-                <?php if($_SESSION['user'] && $_SESSION['user']['isAdmin'] != true) { ?>
-                    <a href="#modal-1" class="btn btn-primary" role="button">Anmod om ny ingrediens</a>
-                <?php } ?>
+            <?php if($_SESSION['user']) { ?>
+              <a href="#modal-1" class="btn btn-primary" role="button"><?= ($_SESSION['user']['isAdmin']) ? 'Tilføj ny ingrediens' : 'Anmod om ny ingrediens' ?></a>
+            <?php } ?>
             </div>
             <div class="row">
                 <div class="col-12">
@@ -46,7 +37,7 @@
                             <div class="row">
                                 <?php foreach ($data as $d) { ?>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 px-5 pb-5">
-                                    <form action="../scripts/delete_ingredient.php" method="post">
+                                    <form action="../scripts/delete.php" method="post">
                                         <table class="table" style="border: 2px solid grey;">
                                             <tbody>
                                                 <tr>
@@ -84,8 +75,8 @@
       <a href="#" class="btn close" role="button" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </a>
-      <h5 class="modal-title">Anmodning til ny ingrediens</h5>
-      <form action="../scripts/request_ingredient.php" method="post">
+      <h5 class="modal-title"><?= ($_SESSION['user']['isAdmin']) ? 'Tilføj ingrediens' : 'Anmodning til ny ingrediens' ?></h5>
+      <form action="../scripts/request_or_add.php" method="post">
         <div class="form-group">
           <label for="ingredient_name" class="required">Ingrediensens navn</label>
           <input type="text" id="ingredient_name" name="ingredient_name" class="form-control" placeholder="Ingrediens" required="required">
@@ -95,28 +86,5 @@
     </div>
   </div>
 </div>
-
-<!-- Second modal -->
-<div class="modal" id="modal-2" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <a href="#" class="btn close" role="button" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </a>
-      <h5 class="modal-title">Tilføj ingrediens</h5>
-      <form action="../scripts/request_ingredient.php" method="post">
-        <div class="form-group">
-          <label for="ingredient_name" class="required">Ingrediensens navn</label>
-          <input type="text" id="ingredient_name" name="ingredient_name" class="form-control" placeholder="Ingrediens" required="required">
-        </div>
-        <input class="btn btn-primary btn-block" type="submit" name="add_ingredient" value="Tilføj">
-      </form>
-    </div>
-  </div>
-</div>
-
-<!-- JavaScript -->
-<script src="../js/halfmoon.min.js"></script>
-</script>
 </body>
 </html>
