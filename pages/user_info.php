@@ -11,10 +11,6 @@ $editUser = getUserById($_SESSION['user']['id']);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="../css/halfmoon.min.css">
-    <link rel="stylesheet" href="../css/fontawesome.min.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <title>M&M - Bruger</title>
 </head>
 <body class="with-custom-webkit-scrollbars with-custom-css-scrollbars" data-dm-shortcut-enabled="true"
@@ -54,6 +50,5 @@ $editUser = getUserById($_SESSION['user']['id']);
             </div>
         </div>
     </div>
-<script src="/js/halfmoon.min.js"></script>
 </body>
 </html>
