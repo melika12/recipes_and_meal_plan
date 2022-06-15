@@ -23,11 +23,14 @@ function getRecipeById($id) {
 }
 
 function getRecipeByName($name) {
-  $get_meal = callAPI('GET', 'http://localhost:5000/api/recipes/meal?name='.$name, false);
+  $url = 'http://localhost:5000/api/recipes/meal?name='.$name;
+  $url = str_replace(" ","%20",$url);
+  $get_meal = callAPI('GET', $url, false);
   if (is_int($get_meal)) {
     return $get_meal;
   } else {
     $data = json_decode($get_meal, true);   
+    $data = str_replace("%20"," ",$data);
     return $data;
   }
 }
@@ -162,7 +165,11 @@ function getRecipeIngredientsByIngredientIds($ingredientIds) {
     $query .= "ingredientIds=".$ingredientId."&";
   }
   $query = substr($query, 0, -1);
-  $get_ingredients = callAPI('GET', 'http://localhost:5000/api/recipeingredients/ingredients?'.$query, false);
+
+  $url = 'http://localhost:5000/api/recipeingredients/ingredients?'.$query;
+  $url = str_replace(" ","%20",$url);
+
+  $get_ingredients = callAPI('GET', $url, false);
   if (is_int($get_ingredients)) {
     return $get_ingredients;
   } else {
@@ -194,7 +201,9 @@ function getUserById($id) {
 }
 
 function getUserByName($name) {
-  $get_user = callAPI('GET', 'http://localhost:5000/api/users/name?username='.$name, false);
+  $url = 'http://localhost:5000/api/users/name?username='.$name;
+  $url = str_replace(" ","%20",$url);
+  $get_user = callAPI('GET', $url, false);
   if (is_int($get_user)) {
     return $get_user;
   } else {
@@ -321,7 +330,10 @@ function getIngredientId($id) {
 }
 
 function getIngredientByName($name) {
-  $get_data = callAPI('GET', 'http://localhost:5000/api/ingredients/name?ingredientname='.$name, false);
+  $url = 'http://localhost:5000/api/ingredients/name?ingredientname='.$name;
+  $url = str_replace(" ","%20",$url);
+
+  $get_data = callAPI('GET', $url, false);
   if (is_int($get_data)) {
     return $get_data;
   } else {
@@ -396,7 +408,10 @@ function getUnits() {
 }
 
 function getUnitByName($name) {
-  $get_data = callAPI('GET', 'http://localhost:5000/api/units/name?unitname='.$name, false);
+  $url = 'http://localhost:5000/api/units/name?unitname='.$name;
+  $url = str_replace(" ","%20",$url);
+
+  $get_data = callAPI('GET', $url, false);
   if (is_int($get_data)) {
     return $get_data;
   } else {
