@@ -31,7 +31,7 @@ if (isset($_POST['email']) || isset($_POST['emailaddress'])) {
     
     // Additional headers 
     $subject = "Madplan oprettet d. ".date("d/m-Y");
-    $headers = "From: Madplan <mm.madplan@yahoo.com>";
+    $headers = "From: Madplan <madplan@madplan.localdomain>";
 
     // Set content-type header for sending HTML email 
     $headers = "MIME-Version: 1.0" . "\r\n"; 
@@ -63,6 +63,7 @@ if (isset($_POST['calendar']) || isset($_POST['add_calendar'])) {
     $end_date = date("d-m-Y", strtotime("+7 day"));
     //UTC time
     $time = "5:00PM";
+    // create ics file
     $ics = new ICS(array(
     'location' => "",
     'description' => $txt,
