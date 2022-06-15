@@ -123,7 +123,7 @@ function add_ingredient() {
         
         //adds a delete a tag to the row
         var aTag = document.createElement('a');
-        aTag.setAttribute('onclick', 'delete_ingredient('+rowIdCount+')');
+        aTag.setAttribute('onclick', 'delete_added_ingredient('+rowIdCount+')');
         aTag.innerText = "Slet";
         
         var cell4 = row.insertCell();
@@ -147,12 +147,12 @@ function add_ingredient() {
         //added a row
         rowIdCount += 1;
 
-        refresh_ingredient();
+        refresh_removed_ingredient();
     }
 }
 
 //delete ingredient from ingredient table
-function delete_ingredient(row) {
+function delete_added_ingredient(row) {
   var table = document.getElementById("ingredient_table");
   var elem = document.getElementById("hidden_row"+row);
   var x = table.rows;
@@ -172,7 +172,7 @@ function delete_ingredient(row) {
 }
 
 //refresh the chosen data after it was added to the ingredient table
-function refresh_ingredient() {
+function refresh_removed_ingredient() {
     document.getElementById("meal_ingredients").value = "";
     document.getElementById("amount").value = "";
     document.getElementById("unit").value = "";
