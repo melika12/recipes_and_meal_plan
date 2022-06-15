@@ -11,7 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>M&M - Indstillinger</title>
 </head>
-<body class="with-custom-webkit-scrollbars with-custom-css-scrollbars" data-dm-shortcut-enabled="true"
+<body class="with-custom-webkit-scrollbars with-custom-css-scrollbars dark-mode" data-dm-shortcut-enabled="true"
       data-set-preferred-mode-onload="true">
 
 <div class="page-wrapper with-navbar">
@@ -36,7 +36,7 @@
                         <form style="display: inline;" action="../scripts/delete.php" method="post">
                             <button class="btn btn-danger" type="submit" name="delete_user"
                                     onclick="return confirm('Er du sikker på at du vil slette denne bruger?')">
-                                <i class="fas fa-user-times"></i> Slet Bruger
+                                <i class="fas fa-trash"></i> Slet Bruger
                             </button>
                         </form>
                     </div>

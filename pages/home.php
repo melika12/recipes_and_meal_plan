@@ -1,7 +1,6 @@
 <?php 
   session_start();
   include_once('../api/api_calls.php');
-  include('generated_mealplan.php');
 
   $data = getRecipes();
   if(isset($_SESSION['searchedList'])) {
@@ -23,12 +22,14 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <!-- CSS style for numbered input field to hide arrows -->
 <style>
-  body {
-  overflow: hidden; /* Hide scrollbars */
+  /* body {
+  overflow: hidden; 
 }
+@media (min-width: 986px) {
   #content {
     width: 30%;
   }
+} */
   input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     /* display: none; <- Crashes Chrome on hover */
@@ -40,11 +41,10 @@ input[type=number] {
     -moz-appearance:textfield; /* Firefox */
 }
 </style>
-
-<script src="../js/recipe.js"></script>
+  <script src="../js/recipe.js"></script>
   <title>M&M Retter</title>
 </head>
-<body class="with-custom-webkit-scrollbars with-custom-css-scrollbars" data-dm-shortcut-enabled="true"
+<body class="with-custom-webkit-scrollbars with-custom-css-scrollbars dark-mode" data-dm-shortcut-enabled="true"
       data-set-preferred-mode-onload="true">
 
 <div class="page-wrapper with-navbar">
@@ -73,7 +73,7 @@ input[type=number] {
                           <input type="hidden" name="recipe_id" value="<?= $d['id'] ?>">
                           <input type="hidden" name="recipe_img" value="<?= $d['img'] ?>">
                           <button class="btn btn-danger" type="submit" name="delete_recipe" onclick="return confirm('Er du sikker på at du vil slette denne opskrift?')">
-                            <i class="fas fa-user-times"></i> Slet
+                            <i class="fas fa-trash"></i> Slet
                           </button>                            
                         </form>
                       <?php } ?>
@@ -92,7 +92,7 @@ input[type=number] {
         </div>
     </div>
 </div>
-
+<?php include('generated_mealplan.php'); ?>
 <!-- Add recipe modal -->
 <div class="modal" id="modal-1" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -300,7 +300,6 @@ input[type=number] {
   </div>
 </div>
 <?php } ?>
-
 <script>
     var loadFile = function(event) {
         var image = document.getElementById('output');

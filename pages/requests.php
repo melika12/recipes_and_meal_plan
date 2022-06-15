@@ -25,9 +25,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- CSS style for numbered input field to hide arrows -->
 <style>
-  #content {
-    width: 30%;
-  }
   input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     /* display: none; <- Crashes Chrome on hover */
@@ -43,7 +40,7 @@ input[type=number] {
     <script src="../js/recipe.js"></script>
     <title>M&M Anmodninger</title>
 </head>
-<body class="with-custom-webkit-scrollbars with-custom-css-scrollbars" data-dm-shortcut-enabled="true"
+<body class="with-custom-webkit-scrollbars with-custom-css-scrollbars dark-mode" data-dm-shortcut-enabled="true"
       data-set-preferred-mode-onload="true">
 
 <div class="page-wrapper with-navbar">
@@ -68,7 +65,7 @@ input[type=number] {
                                 <h4><?= $meal['name'] ?></h4>
                                 <img src="../img/<?= (is_null($meal['img'])) ? 'placeholder.png' : $meal['img'] ?>" class="img-fluid rounded-circle" height="100" width="100" name="image" alt="Image">
                             </div>
-                            <div class="row">
+                            <div class="row mw-full">
                                 <div class="col p-5" style="min-width:200px">
                                     <h5 class="mt-0">Fremgangsmåde:</h5>
                                     <p><?php foreach(explode("\r\n", $meal['course_of_action']) as $txt) { echo $txt.'<br>'; } ?></p>
@@ -78,6 +75,7 @@ input[type=number] {
                                     <p><?= $meal['time'] ?> minutter</p>
                                 </div>
                                 <div class="col p-5">
+                                  <div class="table-responsive">
                                     <table class="table table-bordered">
                                         <tr>
                                             <th>Ingredienser:</th>
@@ -92,6 +90,7 @@ input[type=number] {
                                         </tr>
                                         <?php } ?> 
                                     </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -102,7 +101,7 @@ input[type=number] {
                             <input type="hidden" name="recipe_img" value="<?= $meal['img'] ?>">
                             <button class="btn btn-danger" type="submit" name="delete_recipe"
                                     onclick="return confirm('Er du sikker på at du vil afvise denne opskriftsanmodning?')">
-                                <i class="fas fa-user-times"></i> Afvis
+                                <i class="fas fa-trash"></i> Afvis
                             </button>
                         </div>
                     </form>
@@ -112,7 +111,7 @@ input[type=number] {
 
             <!-- Ingredient requests -->
             <div class="content">
-                <h2>Ingredienser</h2>
+                <h2>Ingrediensanmodninger</h2>
             </div>
             <div class="card">
                 <div class="row">
@@ -129,7 +128,7 @@ input[type=number] {
                                 <input type="hidden" name="ingredient_id" value="<?= $i['id'] ?>">
                                 <button class="btn btn-danger" type="submit" name="delete_ingredient"
                                         onclick="return confirm('Er du sikker på at du vil afvise denne ingrediensanmodning?')">
-                                    <i class="fas fa-user-times"></i> Afvis
+                                    <i class="fas fa-trash"></i> Afvis
                                 </button>
                             </div>
                         </form> 
@@ -140,7 +139,7 @@ input[type=number] {
 
             <!-- Unit requests -->
             <div class="content">
-                <h2>Måleenheder</h2>
+                <h2>Måleenhedsanmodninger</h2>
             </div>
             <div class="card">
                 <div class="row">
@@ -157,7 +156,7 @@ input[type=number] {
                                 <input type="hidden" name="unit_id" value="<?= $u['id'] ?>">
                                 <button class="btn btn-danger" type="submit" name="delete_unit"
                                         onclick="return confirm('Er du sikker på at du vil afvise denne måleenhedsanmodning?')">
-                                    <i class="fas fa-user-times"></i> Afvis
+                                    <i class="fas fa-trash"></i> Afvis
                                 </button>
                             </div>
                         </form> 

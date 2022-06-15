@@ -15,7 +15,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>M&M Ingredienser</title>
 </head>
-<body class="with-custom-webkit-scrollbars with-custom-css-scrollbars" data-dm-shortcut-enabled="true"
+<body class="with-custom-webkit-scrollbars with-custom-css-scrollbars dark-mode" data-dm-shortcut-enabled="true"
       data-set-preferred-mode-onload="true">
 
 <div class="page-wrapper with-navbar">
@@ -48,7 +48,7 @@
                                                         <td class="text-right">
                                                             <button class="btn btn-danger" type="submit" name="delete_ingredient"
                                                                     onclick="return confirm('Er du sikker på at du vil slette denne ingrediens?')">
-                                                                <i class="fas fa-user-times"></i> Slet
+                                                                <i class="fas fa-trash"></i> Slet
                                                             </button>
                                                         </td>
                                                     <?php } ?>

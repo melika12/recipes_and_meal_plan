@@ -13,7 +13,7 @@ $editUser = getUserById($_SESSION['user']['id']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M&M - Bruger</title>
 </head>
-<body class="with-custom-webkit-scrollbars with-custom-css-scrollbars" data-dm-shortcut-enabled="true"
+<body class="with-custom-webkit-scrollbars with-custom-css-scrollbars dark-mode" data-dm-shortcut-enabled="true"
       data-set-preferred-mode-onload="true">
     <div class="page-wrapper with-navbar">
         <?php require_once('./navbar.php'); ?>

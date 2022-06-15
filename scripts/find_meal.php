@@ -4,7 +4,7 @@
 
     if($_GET['search'] != '') {
         $meal = getRecipeByName($_GET['search']);
-    
+
         if($meal) {
             $_SESSION['searchedList'] =  $meal;
             header('Location: ../pages/home.php');

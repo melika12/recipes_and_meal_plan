@@ -19,7 +19,7 @@
     <meta name="meal" content="<?= $_GET['recipe'] ?>">
     <title>M&M - Mad</title>
 </head>
-<body class="with-custom-webkit-scrollbars with-custom-css-scrollbars" data-dm-shortcut-enabled="true"
+<body class="with-custom-webkit-scrollbars with-custom-css-scrollbars dark-mode" data-dm-shortcut-enabled="true"
       data-set-preferred-mode-onload="true">
 
 <div class="page-wrapper with-navbar">

@@ -2,12 +2,10 @@
     error_reporting(0);
     include_once('mealplan.php');
 ?>
-<head>
 <link rel="stylesheet" href="../css/halfmoon.min.css">
 <link rel="stylesheet" href="../css/fontawesome.min.css">
 <link rel="stylesheet" href="../style/style.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-</head>
 <nav class="navbar">
     <div class="navbar-content">
         <form class="form-inline ml-auto" action="../scripts/find_meal.php" method="get">
@@ -76,7 +74,6 @@
     });
 
     $(document).ready(function () {
-        document.body.classList.add("dark-mode");
         $('.search-box input[type="text"]').on('keyup input', function () {
 
             /* Get input value on change */

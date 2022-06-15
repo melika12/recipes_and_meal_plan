@@ -21,7 +21,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>M&M Retter</title>
 </head>
-<body class="with-custom-webkit-scrollbars with-custom-css-scrollbars" data-dm-shortcut-enabled="true"
+<body class="with-custom-webkit-scrollbars with-custom-css-scrollbars dark-mode" data-dm-shortcut-enabled="true"
       data-set-preferred-mode-onload="true">
 
 <div class="page-wrapper with-navbar">
@@ -44,7 +44,7 @@
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="text" name="password" class="form-control" value="<?= $user['password'] ?>" readonly="readonly">
+                            <input type="password" name="password" class="form-control" value="**********" readonly="readonly">
                         </div>
                         <?php if($_SESSION['user']['isAdmin'] == true && $user['username'] != "mm_Admin") { ?>
                             <div class="form-group text-right">
@@ -52,7 +52,7 @@
                                 <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
                                 <button class="btn btn-danger" type="submit" name="admin_delete_user"
                                         onclick="return confirm('Er du sikker på at du vil slette denne bruger?')">
-                                    <i class="fas fa-user-times"></i> Slet
+                                    <i class="fas fa-trash"></i> Slet
                                 </button>
                             </div>
                         <?php } ?>
@@ -74,14 +74,14 @@
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="text" name="password" class="form-control" value="<?= $user['password'] ?>" readonly="readonly">
+                            <input type="password" name="password" class="form-control" value="**********" readonly="readonly">
                         </div>
                         <div class="form-group text-right">
                             <a href="#modal<?= $user['id'] ?>" class="btn btn-primary" role="button">Redigér</a>
                             <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
                             <button class="btn btn-danger" type="submit" name="admin_delete_user"
                                     onclick="return confirm('Er du sikker på at du vil slette denne bruger?')">
-                                <i class="fas fa-user-times"></i> Slet
+                                <i class="fas fa-trash"></i> Slet
                             </button>
                         </div>
                     </form>
@@ -110,7 +110,7 @@ foreach($users as $user) {
         </div>
         <div class="form-group">
             <label>Password</label>
-            <input type="text" name="password" class="form-control" value="<?= $user['password'] ?>">
+            <input type="password" name="password" class="form-control" value="<?= $user['password'] ?>">
         </div>
         <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
         <input type="hidden" name="isAdmin" value="<?= $user['isAdmin'] ?>">

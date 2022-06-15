@@ -37,7 +37,7 @@ if (isset($_POST['generate_mealplan'])) {
             array_push($alreadyChosen, $recipe['id']);
         }
     }
-
+    
     if (count($chosenRecipes) < 7) {
         for ($i = count($chosenRecipes); $i < 7; $i++) {
             $index = rand(0, (count($recipes)-1)); 
@@ -71,4 +71,4 @@ function unique_multi_array($array, $key) {
         $i++; 
     } 
     return $temp_array; 
-  }
+}
