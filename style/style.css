@@ -4,7 +4,13 @@ a {
 #second {
     display: none;
 }
-@media (min-width: 751px) {
+@media (min-width: 986px) {
+    body {
+        overflow: hidden;
+    }
+    #content {
+        width: 30%;
+      }
     .toggle-button {
         display:none;
     }
@@ -13,7 +19,10 @@ a {
         width:15rem;
     }
 }
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 985px) {
+    body {
+        overflow: auto;
+    }
     img {
         height: 10rem;
         width:25rem;
