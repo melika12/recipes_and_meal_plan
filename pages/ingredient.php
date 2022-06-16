@@ -81,7 +81,7 @@
           <label for="ingredient_name" class="required">Ingrediensens navn</label>
           <input type="text" id="ingredient_name" name="ingredient_name" class="form-control" placeholder="Ingrediens" required="required">
         </div>
-        <input class="btn btn-primary btn-block" type="submit" name="request_ingredient" value="Indsend Anmodning">
+        <input class="btn btn-primary btn-block" type="submit" name="request_ingredient" value="<?= ($_SESSION['user']['isAdmin']) ? 'Tilføj ingrediens' : 'Indsend Anmodning' ?>">
       </form>
     </div>
   </div>

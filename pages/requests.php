@@ -54,7 +54,7 @@ input[type=number] {
             </div>
             <div class="card">
             <?php 
-                echo (count($recipeRequests) == 0) ? '<h4 class="card-title">Der er ingen nye anmodninger</h4>': '';
+                echo ($recipeRequests == null) ? '<h4 class="card-title">Der er ingen nye anmodninger</h4>': '';
                 foreach ($recipeRequests as $meal) { 
                     $ingredientAmountUnit = getRecipeIngredients($meal['id']); 
             ?>
@@ -116,7 +116,7 @@ input[type=number] {
             <div class="card">
                 <div class="row">
                     <?php 
-                        echo (count($ingredientRequests) == 0) ? '<h4 class="card-title">Der er ingen nye anmodninger</h4>': '';
+                        echo ($ingredientRequests == null) ? '<h4 class="card-title">Der er ingen nye anmodninger</h4>': '';
                         foreach ($ingredientRequests as $i) { 
                     ?>
                     <div class="alert filled-lm m-5">
@@ -144,7 +144,7 @@ input[type=number] {
             <div class="card">
                 <div class="row">
                     <?php
-                        echo (count($unitRequests) == 0) ? '<h4 class="card-title">Der er ingen nye anmodninger</h4>': '';
+                        echo ($unitRequests == null) ? '<h4 class="card-title">Der er ingen nye anmodninger</h4>': '';
                         foreach ($unitRequests as $u) { 
                     ?>
                         <div class="alert filled-lm m-5">
