@@ -29,8 +29,7 @@ function getRecipeByName($name) {
   if (is_int($get_meal)) {
     return $get_meal;
   } else {
-    $data = json_decode($get_meal, true);   
-    $data = str_replace("%20"," ",$data);
+    $data = json_decode($get_meal, true);
     return $data;
   }
 }

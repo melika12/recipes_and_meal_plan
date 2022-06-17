@@ -85,7 +85,7 @@ if (isset($_POST['edit_recipe'])) {
             }
         }
     }
-    if (!empty($recipeIngredients) || sizeof($recipeIngredients) > 0) {
+    if (!empty($recipeIngredients) && sizeof($recipeIngredients) > 0) {
         foreach ($recipeIngredients as $ri) {
             //deletes each ingredient that has been removed from the list
             deleteRecipeIngredient($ri['id']);

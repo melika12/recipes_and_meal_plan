@@ -82,11 +82,15 @@ input[type=number] {
                                             <th>Mængde:</th>
                                             <th>Måleenhed:</th>
                                         </tr>
-                                        <?php foreach ($ingredientAmountUnit as $iau) { ?>
+                                        <?php foreach ($ingredientAmountUnit as $iau) { 
+                                            //gets the index of unit and ingredient
+                                            $found_i = array_search($iau['ingredient_id'], array_column($ingredients, 'id'));
+                                            $found_u = array_search($iau['unit_id'], array_column($units, 'id'));
+                                        ?>
                                         <tr>
-                                            <td><?= $ingredients[$iau['ingredient_id']-1]['name'] ?></td>
+                                            <td><?= $ingredients[$found_i]['name'] ?></td>
                                             <td><?= $iau['amount'] ?></td>
-                                            <td><?= $units[$iau['unit_id']-1]['name'] ?></td>
+                                            <td><?= $units[$found_u]['name'] ?></td>
                                         </tr>
                                         <?php } ?> 
                                     </table>
